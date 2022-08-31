@@ -9,5 +9,8 @@ app.use(cors())
 app.use(json())
 
 app.use('/pokemons', commentRouter)
+app.get('/health', (req, res) => {
+    res.status(200).send('OK!')
+})
 
 export default app
