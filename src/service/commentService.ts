@@ -1,4 +1,5 @@
 import prismaClient from '../database.js'
+
 async function createComment(
     email: string,
     comment: string,
@@ -38,9 +39,14 @@ async function getComments(pokemonId: number) {
         where: { pokemonId },
     })
 
+    if (!pokemon) {
+        return []
+    }
+
     const comments = await prismaClient.comment.findMany({
         where: { pokemonId: pokemon.id },
         include: { user: true },
+        orderBy: {id: 'desc'}
     })
     return comments
 }

@@ -3,14 +3,16 @@ import { Request, Response } from 'express'
 import commentService from '../service/commentService.js'
 
 export async function createComment(req: Request, res: Response) {
-    const { comment, email, pokemonId, name, img } = req.body
+    const { comment, email, name, img } = req.body
+
+    const { pokemonId } = req.params
 
     if (!comment || !email || !pokemonId || !name) {
         res.sendStatus(400)
         return
     }
 
-    await commentService.createComment(email, comment, pokemonId, name, img)
+    await commentService.createComment(email, comment, +pokemonId, name, img)
 
     res.sendStatus(201)
 }
